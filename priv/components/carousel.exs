@@ -21,7 +21,8 @@
       padding: ["extra_small", "small", "medium", "large", "extra_large"],
       only: ["carousel"],
       helpers: [],
-      module: ""
+      module: "",
+      carousel_items: []
     ],
     optional: [],
     necessary: ["image", "icon"],
