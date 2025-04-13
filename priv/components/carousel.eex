@@ -93,6 +93,10 @@ defmodule <%= @module %> do
     default: "active-indicator",
     doc: "CSS class for active indicator"
 
+  attr :carousel_items, :list,
+    default: [],
+    doc: "List of items to be displayed in the carousel"
+
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   slot :slide, required: true do
@@ -161,17 +165,31 @@ defmodule <%= @module %> do
         <.icon name="hero-chevron-right" class="size-7 text-white" />
       </button>
 
-      <div
-        :for={{slide, index} <- Enum.with_index(@slide, 1)}
-        id={"#{@id}-carousel-slide-#{index}"}
-        class={["slide h-full", slide[:class]]}
-      >
-        <div class="relative w-full h-full">
-          <.slide_image id={@id} index={index} {slide}>
-            <.slide_content id={@id} index={index} {slide} />
-          </.slide_image>
+      { if @carousel_items do %>
+        <div
+          :for={{slide, index} <- Enum.with_index(@carousel_items, 1)}
+          id={"#{@id}-carousel-slide-#{index}"}
+          class={["slide h-full", slide[:class]]}
+        >
+          <div class="relative w-full h-full">
+            <.slide_image id={@id} index={index} {slide}>
+              <.slide_content id={@id} index={index} {slide} />
+            </.slide_image>
+          </div>
         </div>
-      </div>
+      { else }
+        <div
+          :for={{slide, index} <- Enum.with_index(@slide, 1)}
+          id={"#{@id}-carousel-slide-#{index}"}
+          class={["slide h-full", slide[:class]]}
+        >
+          <div class="relative w-full h-full">
+            <.slide_image id={@id} index={index} {slide}>
+              <.slide_content id={@id} index={index} {slide} />
+            </.slide_image>
+          </div>
+        </div>
+      { end }
 
       <.slide_indicators :if={@indicator} id={@id} count={length(@slide)} />
     </div>
