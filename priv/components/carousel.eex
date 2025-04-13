@@ -165,7 +165,7 @@ defmodule <%= @module %> do
         <.icon name="hero-chevron-right" class="size-7 text-white" />
       </button>
 
-      { if @carousel_items do }
+      <%= if @carousel_items do %>
         <div
           :for={{slide, index} <- Enum.with_index(@carousel_items, 1)}
           id={"#{@id}-carousel-slide-#{index}"}
@@ -177,7 +177,7 @@ defmodule <%= @module %> do
             </.slide_image>
           </div>
         </div>
-      { else }
+      <% else %>
         <div
           :for={{slide, index} <- Enum.with_index(@slide, 1)}
           id={"#{@id}-carousel-slide-#{index}"}
@@ -189,7 +189,7 @@ defmodule <%= @module %> do
             </.slide_image>
           </div>
         </div>
-      { end }
+      <% end %>
 
       <.slide_indicators :if={@indicator} id={@id} count={length(@slide)} />
     </div>
